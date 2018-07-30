@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { createTask } from "../actionCreators";
 
 class NewTodoForm extends Component {
   state = {
@@ -11,12 +12,8 @@ class NewTodoForm extends Component {
     });
   };
   createTodo = evt => {
-    debugger;
     evt.preventDefault();
-    this.props.dispatch({
-      type: "ADD_TODO",
-      task: this.state.task
-    });
+    this.props.createTask(this.state.task);
     this.setState({
       task: ""
     });
@@ -39,4 +36,7 @@ class NewTodoForm extends Component {
   }
 }
 
-export default connect()(NewTodoForm);
+export default connect(
+  null,
+  { createTask }
+)(NewTodoForm);

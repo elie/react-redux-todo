@@ -1,23 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Todo from "../components/Todo";
+import { fetchTodos } from "../actionCreators";
 
 class TodoList extends Component {
-  handleDelete = id => {
-    debugger;
-    this.props.dispatch({
-      type: "DELETE_TODO",
-      id
-    });
-  };
+  componentDidMount() {
+    this.props.fetchTodos();
+  }
   render() {
-    debugger;
     const todos = this.props.todos.map(todo => (
-      <Todo
-        deleteTodo={() => this.handleDelete(todo.id)}
-        key={todo.id}
-        task={todo.task}
-      />
+      <Todo key={todo.id} task={todo.task} />
     ));
     return (
       <div>
@@ -28,11 +20,13 @@ class TodoList extends Component {
 }
 
 function mapStateToProps(reduxState) {
-  debugger;
   return {
     todos: reduxState.todos,
     name: "Mary"
   };
 }
 
-export default connect(mapStateToProps)(TodoList);
+export default connect(
+  mapStateToProps,
+  { fetchTodos }
+)(TodoList);
